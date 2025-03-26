@@ -2,7 +2,14 @@
 
 const route = useRoute();
 
-const title = computed(() => route.query.title);
+class nCardValue {
+  public static get title() {
+    return route.query.title;
+  }
+}
+
+
+const title = nCardValue.title;
 const content = computed(() => route.query.content);
 
 const show97new = ref(false);
@@ -11,8 +18,11 @@ let msg = ref<string>('这是数据！')
 
 onMounted(() => {
   msg = ref('这是数据！')
+  const s = "abc"
+  console.log(typeof s)
+  console.log((s as unknown)  as number)
+  console.log(typeof ((s as unknown) as number))
 })
-
 </script>
 
 <template>
