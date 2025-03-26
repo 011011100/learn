@@ -1,11 +1,11 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 
-import nine_nine_new from '../components/nine_nine_new.vue'
-import nine_eight_new from '../components/nine_eight_new.vue'
+import home from '../components/index.vue'
+import berry from '../components/berry/index.vue'
 
 const routes = [
-    {path: '/', component: nine_nine_new, name:'99new'},
-    {path: '/98new', component: nine_eight_new, name: '98new', },
+    {path: '/', component: home, name:'home'},
+    {path: '/berry', component: berry, name: 'berry', },
 ]
 
 const router = createRouter({
