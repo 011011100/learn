@@ -1,9 +1,10 @@
-import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from "path"
 import UnoCss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
 import {NaiveUiResolver} from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+import {defineConfig} from 'vite'
 
 export default defineConfig({
     plugins: [
@@ -24,4 +25,10 @@ export default defineConfig({
         }),
         vue()
     ],
+    resolve: {
+        alias: {
+            // 别名配置
+            '@': path.resolve(__dirname, 'src')
+        }
+    },
 })
