@@ -1,5 +1,4 @@
 import axios from "axios";
-import {provide} from "vue";
 
 const request = axios.create({
     // baseURL: appConfig.request.baseURL,  // API 请求的默认前缀

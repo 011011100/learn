@@ -2,7 +2,6 @@
 import {getBerryList, type getBerryListData} from "@/api/pokemon/berryApi.ts";
 import request from "@/util/request.ts";
 import divNPopover from "@/components/popover/divNPopover.ts";
-import {NButton} from "naive-ui";
 
 const data = ref<any>([])
 
