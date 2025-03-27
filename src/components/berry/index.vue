@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import {getBerryList, type getBerryListData} from "../../api/pokemonApi.ts";
+import {getBerryList, type getBerryListData} from "@/api/pokemon/berryApi.ts";
 
 const data = ref([])
 
@@ -16,21 +16,6 @@ const columns = [
       return `${row.name.charAt(0).toUpperCase()}${row.name.slice(1)}`
     }
   },
-  // {
-  //   title: 'Img',
-  //   key: 'img',
-  //   render(row: any) {
-  //     return h(
-  //         NImage,
-  //         {
-  //           src: 'https://archives.bulbagarden.net/media/upload/6/61/Bag_' + `${row.name.charAt(0).toUpperCase()}${row.name.slice(1)}` + '_Berry_Sprite.png'
-  //         },
-  //         {
-  //           default: () => row.name
-  //         }
-  //     )
-  //   },
-  // },
   {
     title: 'Url',
     key: 'url'
@@ -43,11 +28,9 @@ const pagination = ref({
 })
 
 function getBerryData(parameter: getBerryListData) {
-  getBerryList(parameter).then((res) => {
-    console.log(res)
+  getBerryList(parameter).then((res:any) => {
     data.value = res.data.results
     pagination.value.itemCount = res.data.count
-    console.log(pagination)
   })
 }
 
