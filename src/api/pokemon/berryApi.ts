@@ -1,15 +1,4 @@
-import api from "../util/reqApi.ts";
-
-export function getResourceList(data:any):Promise<any> {
-    return api({
-        url: "/",
-        method: "get",
-        params:{
-            limit:data.limit,
-            offset:data.offset
-        }
-    });
-}
+import api from "@/util/reqApi.ts";
 
 export type getBerryListData = {
     id?:number,
