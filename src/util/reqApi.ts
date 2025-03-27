@@ -1,5 +1,5 @@
 import request from "./request.ts";
-import createErrorMsg from "../components/message/error_message.ts";
+import createErrorMsg from "../components/message/errorMessage.ts";
 import type {AxiosResponse} from "axios";
 
 export default function api(data: any) {
