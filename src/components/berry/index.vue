@@ -2,6 +2,9 @@
 import {getBerryList, type getBerryListData} from "@/api/pokemon/berryApi.ts";
 import request from "@/util/request.ts";
 import divNPopover from "@/components/popover/divNPopover.ts";
+import {NButton} from "naive-ui";
+
+const router = useRouter()
 
 const data = ref<any>([])
 
@@ -126,11 +129,15 @@ const columns = [
     title: '操作',
     key: 'control',
     align: 'center',
-    render() {
+    render(row: any) {
       return h(
           NButton,
           {
-            type: "info"
+            size: "tiny",
+            type: "info",
+            onClick: () => {
+              router.push({name: 'berryInfo', params: {item:row.infoUrl}})
+            }
           },
           { default: () => "查看详情" }
       )
