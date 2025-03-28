@@ -21,7 +21,10 @@
     "noUncheckedSideEffectImports": true,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
   },
   "include": ["vite.config.ts"]
 }
