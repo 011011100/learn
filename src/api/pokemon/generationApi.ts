@@ -1,8 +1,6 @@
 import api from "@/util/reqApi.ts";
 
 export type getGenerationData = {
-    id?: number,
-    name?: string,
     limit?: number,
     offset?: number
 }
@@ -14,5 +12,12 @@ export function getGenerationsPageList(data?: getGenerationData) {
         params: {
             data
         }
+    });
+}
+
+export function getGenerationsInfo(id: number) {
+    return api({
+        url:`/generation/${id}`,
+        method: "get"
     });
 }
