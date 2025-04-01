@@ -2,9 +2,9 @@
 import request from "@/util/request.ts";
 import DivNPopover from "@/components/popover/divNPopover.ts";
 
-const props = defineProps({
-  item: String
-})
+const props = defineProps<{
+  item: string
+}>()
 
 const berryInfoData = ref<{
   id?: number,
@@ -60,7 +60,7 @@ function getBerryZHFlavorTextEntries(): string | undefined {
   if (berryInfoData.value.flavor_text_entries) {
     let entries = berryInfoData.value.flavor_text_entries;
     for (const entry of entries) {
-      let addEntity :any = {}
+      let addEntity: any = {}
       if (entry.language.name === "zh-Hans") {
         addEntity.text = entry.text
         addEntity.version_group = entry.version_group
@@ -80,9 +80,10 @@ function getBerryZHFlavorTextEntries(): string | undefined {
     {{ berryZHFlavorTextEntries }}
     <n-image :src="berryInfoData.sprites?.default"/>
     <div>
-      <div-n-popover content='成本' prompt-content="这个物品在商店里的价格。"/>{{ berryInfoData.cost }}
+      <div-n-popover content='成本' prompt-content="这个物品在商店里的价格。"/>
+      {{ berryInfoData.cost }}
     </div>
-<!--    <version-info :version="{name:'black',url:'https://pokeapi.co/api/v2/version/17/'}"/>-->
+    <!--    <version-info :version="{name:'black',url:'https://pokeapi.co/api/v2/version/17/'}"/>-->
   </n-space>
 </template>
 
