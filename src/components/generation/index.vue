@@ -17,12 +17,17 @@ function getGenerationData(parameter?: getGenerationData) {
   })
 }
 
+const router = useRouter()
+function jumpToGenerationInfo(index: number) {
+  router.push({name: "generationInfo", params: {index: index+1}})
+}
+
 </script>
 
 <template>
   <n-grid :cols="3" x-gap="12" y-gap="12">
     <n-gi v-for="(generation, index) in generationData" :key="index">
-      <n-button class="w-full min-h-full" type="info">
+      <n-button class="w-full min-h-full" type="info" @click="jumpToGenerationInfo(index)">
         {{ generation.name }}
       </n-button>
     </n-gi>
