@@ -1,17 +1,10 @@
 <script setup lang="ts">
-
-const router = useRouter();
-
-function jumpBerry() {
-  router.push({name:'berry'})
-}
+import generation from "@/components/generation/index.vue";
 
 </script>
 
 <template>
-  <n-button type="info" @click="jumpBerry">
-    jump berry
-  </n-button>
+  <generation/>
 </template>
 
 <style scoped>
