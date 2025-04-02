@@ -17,6 +17,13 @@ export function getVersionList(data?: getVersionData) {
     });
 }
 
+export function getVersionInfo(id: number) {
+    return api({
+        url: `/version/${id}`,
+        method: "get",
+    });
+}
+
 export function getVersionGroupList(data?: getVersionData) {
     return api({
         url: "/version-group",
@@ -24,5 +31,12 @@ export function getVersionGroupList(data?: getVersionData) {
         params: {
             data
         }
+    });
+}
+
+export function getVersionGroupInfo(id: number) {
+    return api({
+        url: `/version-group/${id}`,
+        method: "get",
     });
 }
