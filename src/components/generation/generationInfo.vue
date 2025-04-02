@@ -2,6 +2,7 @@
 import {getGenerationsInfo} from "@/api/pokemon/generationApi.ts";
 import PokemonCard from "@/components/pokemon/pokemonCard.tsx";
 import request from "@/util/request.ts";
+import {Reload} from '@vicons/ionicons5'
 
 const props = defineProps<{
   index: number
@@ -11,8 +12,9 @@ const data = ref<any>()
 const pokemonSpecies = ref<Array<any>>([])
 const pokemonSpeciesCard = ref<Array<any>>([])
 
-onMounted(async () => {
+const showPokemonCardLoading = ref(true)
 
+onMounted(async () => {
   await getGenerationsInfo(props.index).then((res: any) => {
     data.value = res.data
   })
@@ -25,14 +27,14 @@ onMounted(async () => {
   );
 
   createPokemonCardData()
-
   await nextTick();
+  showPokemonCardLoading.value = false
 })
 
 function createPokemonCardData() {
   for (const pokemon of pokemonSpecies.value) {
     const cardData = {
-      id:pokemon.id as number,
+      id: pokemon.id as number,
       order: pokemon.order as number,
       zhName: "",
       zhGenus: "",
@@ -68,13 +70,23 @@ function createPokemonCardData() {
   <n-divider title-placement="left">
     宝可梦组
   </n-divider>
-  <n-space>
-    <n-space vertical v-for="(space) in [0,1,2,3]">
-      <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
-        <pokemon-card v-if="(pokemonSpeciesCard.length/4)*space <= index && index < (pokemonSpeciesCard.length/4)*(space+1)" :pokemon-card-data="pokemon"/>
-      </template>
+  <n-spin :show="showPokemonCardLoading">
+    <template #icon>
+      <n-icon>
+        <Reload/>
+      </n-icon>
+    </template>
+    <n-space>
+      <n-space v-for="(space) in [0,1,2,3]" vertical>
+        <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
+          <pokemon-card
+              v-if="(pokemonSpeciesCard.length/4)*space <= index && index < (pokemonSpeciesCard.length/4)*(space+1)"
+              :pokemon-card-data="pokemon"/>
+        </template>
+      </n-space>
     </n-space>
-  </n-space>
+  </n-spin>
+
 </template>
 
 <style scoped>
