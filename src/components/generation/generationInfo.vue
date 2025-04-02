@@ -71,7 +71,7 @@ function createPokemonCardData() {
   <n-space>
     <n-space vertical v-for="(space) in [0,1,2,3]">
       <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
-        <pokemon-card v-if="index % 4 === space"  :pokemon-card-data="pokemon"/>
+        <pokemon-card v-if="(pokemonSpeciesCard.length/4)*space <= index && index < (pokemonSpeciesCard.length/4)*(space+1)" :pokemon-card-data="pokemon"/>
       </template>
     </n-space>
   </n-space>
