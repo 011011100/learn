@@ -2,6 +2,7 @@ import request from "@/util/request.ts";
 import {NCard} from "naive-ui";
 import type {PropType} from "vue";
 import createErrorMsg from "@/components/message/errorMessage.ts";
+import router from "@/router";
 
 const pokemonCard = defineComponent({
     name: 'pokemonCard',
@@ -12,6 +13,7 @@ const pokemonCard = defineComponent({
         },
         pokemonCardData: {
             type: Object as PropType<{
+                id?: number,
                 zhName: string,
                 zhGenus: string,
                 zhFlavorTextEntries: string
@@ -20,6 +22,11 @@ const pokemonCard = defineComponent({
         }
     },
     emits: ["updatePokemon"],
+    methods:{
+        handleClick() {
+            router.push({name: "pokemonInfo", params: {id: this.pokemonCardData!.id}})
+        }
+    },
     setup(props, {emit}) {
         const data = ref<any>()
         const zhName = ref<string>()
@@ -46,11 +53,11 @@ const pokemonCard = defineComponent({
                         zhFlavorTextEntries.value = flavorTextEntries.flavor_text.replace(/\n/g, "<br/>")
                     }
                 })
-            }else if (props.pokemonCardData) {
+            } else if (props.pokemonCardData) {
                 zhName.value = props.pokemonCardData.zhName
                 zhGenus.value = props.pokemonCardData.zhGenus
                 zhFlavorTextEntries.value = props.pokemonCardData.zhFlavorTextEntries
-            }else {
+            } else {
                 createErrorMsg("pokemonCard 未传入数据")
             }
 
@@ -58,15 +65,24 @@ const pokemonCard = defineComponent({
             emit("updatePokemon", {zhName: zhName.value});
         })
 
+
         return {
             data,
             zhName,
             zhGenus,
-            zhFlavorTextEntries
+            zhFlavorTextEntries,
         }
     },
     render() {
-        return <NCard style={{maxWidth: "18vw"}} title={this.zhName} size="small" hoverable embedded bordered={false}>
+        return <NCard
+            style={{maxWidth: "18vw"}}
+            title={this.zhName}
+            onClick={this.handleClick}
+            size="small"
+            hoverable
+            embedded
+            bordered={false}
+        >
             <b>{this.zhGenus}</b>
             <div v-html={this.zhFlavorTextEntries}></div>
         </NCard>
