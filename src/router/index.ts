@@ -15,6 +15,12 @@ const routes = [
         name: 'generationInfo',
         props: (route: any) => ({index: Number(route.params.index)})
     },
+    {
+        path: '/pokemonInfo/:id',
+        component: () => import('../components/pokemon/pokemonInfo.vue'),
+        name: 'pokemonInfo',
+        props: (route: any) => ({id: route.params.id})
+    }
 ]
 
 const router = createRouter({
