@@ -66,7 +66,7 @@ const pokemonCard = defineComponent({
         }
     },
     render() {
-        return <NCard title={this.zhName} size="small" hoverable embedded bordered={false}>
+        return <NCard style={{maxWidth: "18vw"}} title={this.zhName} size="small" hoverable embedded bordered={false}>
             <b>{this.zhGenus}</b>
             <div v-html={this.zhFlavorTextEntries}></div>
         </NCard>
