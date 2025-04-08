@@ -57,22 +57,29 @@ function createPokemonCardData() {
       zhGenus: "",
       zhFlavorTextEntries: ""
     }
-    pokemon.names.forEach((name: any) => {
-      if (name.language.name === "zh-Hans") {
-        cardData.zhName = name.name
-      }
-    })
-    pokemon.genera.forEach((genus: any) => {
-      if (genus.language.name === "zh-Hans") {
-        cardData.zhGenus = genus.genus
-      }
-    })
-    pokemon.flavor_text_entries.some((flavorTextEntries: any) => {
-      if (flavorTextEntries.language.name === "zh-Hans") {
-        cardData.zhFlavorTextEntries = flavorTextEntries.flavor_text.replace(/\n/g, "<br/>")
-        return true
-      }
-    })
+
+    const zhName =
+        pokemon.names.find((name: any) => name.language.name === "zh-Hans") ??
+        pokemon.names.find((name: any) => name.language.name === "en");
+    if (zhName) {
+      cardData.zhName = zhName.name
+    }
+
+    const zhGenus =
+        pokemon.genera.find((genus: any) => genus.language.name === "zh-Hans") ??
+        pokemon.genera.find((genus: any) => genus.language.name === "en");
+    if (zhGenus) {
+      cardData.zhGenus = zhGenus.genus
+    }
+
+    const zhOrEnEntry =
+        pokemon.flavor_text_entries.find((entry: any) => entry.language.name === "zh-Hans") ??
+        pokemon.flavor_text_entries.find((entry: any) => entry.language.name === "en");
+
+    if (zhOrEnEntry) {
+      cardData.zhFlavorTextEntries = zhOrEnEntry.flavor_text.replace(/\n/g, "<br/>");
+    }
+
     pokemonSpeciesCard.value.push(cardData)
   }
 
@@ -118,7 +125,7 @@ function randomColor() {
             <Reload/>
           </n-icon>
         </template>
-        <n-space style="min-height: 55px" justify="center">
+        <n-space justify="center" style="min-height: 55px">
           <n-space v-for="(space) in [0,1,2,3]" vertical>
             <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
               <pokemon-card
