@@ -4,12 +4,16 @@ import PokemonCard from "@/components/pokemon/pokemonCard.tsx";
 import request from "@/util/request.ts";
 import {Reload} from '@vicons/ionicons5'
 import versionGroupTwoDimensionalArray from "@/components/version/versionGroupTwoDimensionalArray.ts";
+import gradationText from "@/components/gradationText.vue";
 
 const props = defineProps<{
   index: number
 }>()
 
 const data = ref<any>()
+
+const generationZhName = ref<string>()
+
 const pokemonSpecies = ref<Array<any>>([])
 const pokemonSpeciesCard = ref<Array<any>>([])
 
@@ -25,6 +29,7 @@ onMounted(async () => {
     data.value.version_groups.forEach((version_group: any) => {
       versionGroupUrl.push(version_group.url)
     })
+    generationZhName.value = res.data.names.find((name: any) => name.language.name === "zh-Hans")?.name
   })
 
   await Promise.all(
@@ -74,54 +79,56 @@ function createPokemonCardData() {
   pokemonSpeciesCard.value = pokemonSpeciesCard.value.sort((a, b) => a.order - b.order);
 }
 
+function randomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  const a = Math.random();
+  return `rgba(${r},${g},${b},${a})`;
+}
+
 </script>
 
 <template>
-  <n-layout has-sider>
-    <!--    <n-layout-sider content-style="padding-top: 24px;" width="min-content">-->
-    <!--      <n-anchor>-->
-    <!--        <n-anchor-link v-for="(item , index) in versionGroup" :key="index" :title="item.name">-->
-    <!--          <n-anchor-link v-for="(version , index) in item.versions" :key="index" :title="version.zhName"/>-->
-    <!--        </n-anchor-link>-->
-    <!--      </n-anchor>-->
-    <!--    </n-layout-sider>-->
-    <n-layout>
-      <n-layout-content style="width: max-content;min-width: 100%">
-        <n-divider title-placement="left">
-          <n-gradient-text size="24" style="font-weight: bold" type="info">
-            版本组
-          </n-gradient-text>
-        </n-divider>
-        <n-space>
-          <template v-for="(item ) in versionGroup">
-            <n-tag v-for="(version , index) in item.versions" :key="index" type="info" size="large">
-              {{ version.zhName? version.zhName : version.name }}
-            </n-tag>
-          </template>
-        </n-space>
-        <n-divider title-placement="left">
-          <n-gradient-text size="24" style="font-weight: bold" type="info">
-            宝可梦组
-          </n-gradient-text>
-        </n-divider>
-        <n-spin :show="showPokemonCardLoading">
-          <template #icon>
-            <n-icon>
-              <Reload/>
-            </n-icon>
-          </template>
-          <n-space>
-            <n-space v-for="(space) in [0,1,2,3]" vertical>
-              <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
-                <pokemon-card
-                    v-if="(pokemonSpeciesCard.length/4)*space <= index && index < (pokemonSpeciesCard.length/4)*(space+1)"
-                    :pokemon-card-data="pokemon"/>
-              </template>
-            </n-space>
+  <n-layout style="min-width: 60vw;width: max-content;max-width: 80vw">
+    <n-layout-content>
+      <gradation-text :colors="[randomColor(), randomColor(), randomColor()]" font-size="4rem">
+        {{ generationZhName }}
+      </gradation-text>
+      <n-divider title-placement="left">
+        <n-gradient-text size="24" style="font-weight: bold" type="info">
+          版本组
+        </n-gradient-text>
+      </n-divider>
+      <n-space>
+        <template v-for="(item) in versionGroup">
+          <n-tag v-for="(version , index) in item.versions" :key="index" size="large" type="info">
+            {{ version.zhName ? version.zhName : version.name }}
+          </n-tag>
+        </template>
+      </n-space>
+      <n-divider title-placement="left">
+        <n-gradient-text size="24" style="font-weight: bold" type="info">
+          宝可梦组
+        </n-gradient-text>
+      </n-divider>
+      <n-spin :show="showPokemonCardLoading">
+        <template #icon>
+          <n-icon>
+            <Reload/>
+          </n-icon>
+        </template>
+        <n-space style="min-height: 55px" justify="center">
+          <n-space v-for="(space) in [0,1,2,3]" vertical>
+            <template v-for="(pokemon, index) in pokemonSpeciesCard" :key="index">
+              <pokemon-card
+                  v-if="(pokemonSpeciesCard.length/4)*space <= index && index < (pokemonSpeciesCard.length/4)*(space+1)"
+                  :pokemon-card-data="pokemon"/>
+            </template>
           </n-space>
-        </n-spin>
-      </n-layout-content>
-    </n-layout>
+        </n-space>
+      </n-spin>
+    </n-layout-content>
   </n-layout>
 </template>
 
