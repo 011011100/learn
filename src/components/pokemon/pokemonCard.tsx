@@ -22,7 +22,7 @@ const pokemonCard = defineComponent({
         }
     },
     emits: ["updatePokemon"],
-    methods:{
+    methods: {
         handleClick() {
             router.push({name: "pokemonInfo", params: {id: this.pokemonCardData!.id}})
         }
@@ -74,19 +74,21 @@ const pokemonCard = defineComponent({
         }
     },
     render() {
-        return <NCard
-            style={{maxWidth: "18vw"}}
-            title={this.zhName}
+        return <div
             onClick={this.handleClick}
-            size="small"
-            hoverable
-            embedded
-            bordered={false}
         >
-            <b>{this.zhGenus}</b>
-            <div v-html={this.zhFlavorTextEntries}></div>
-        </NCard>
-
+            <NCard
+                style={{maxWidth: "18vw"}}
+                title={this.zhName}
+                size="small"
+                hoverable
+                embedded
+                bordered={false}
+            >
+                <b>{this.zhGenus}</b>
+                <div v-html={this.zhFlavorTextEntries}></div>
+            </NCard>
+        </div>
     }
 })
 
