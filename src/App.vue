@@ -28,7 +28,7 @@ watch(
 
 <template>
   <main>
-    <n-config-provider :theme="theme" style="width: max-content;min-width: 100%">
+    <n-config-provider :theme="theme">
       <n-float-button :bottom="16" :right="72" shape="square" style="box-shadow: none" class="float-button" >
         <different-kind-switch ref="childRef"/>
       </n-float-button>
