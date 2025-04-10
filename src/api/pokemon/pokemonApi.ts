@@ -19,11 +19,8 @@ export function getResourceList(data: getResourceListData): Promise<any> {
 
 export function getPokemonInfo(id: string): Promise<any> {
     return api({
-        url: "pokemon",
-        method: "get",
-        params: {
-            id: id
-        }
+        url: `pokemon/${id}`,
+        method: "get"
     });
 }
 
